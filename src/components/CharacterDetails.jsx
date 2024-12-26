@@ -1,9 +1,9 @@
 import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
 import { character, episodes } from "../../data/data";
 
-export default function CharacterDetails() {
+export default function CharacterDetails({ selectedId }) {
   return (
-    <div style={{ flex: 1 }}>
+    <div>
       <div className="character-detail">
         <img
           src={character.image}
