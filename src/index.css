@@ -131,3 +131,11 @@ button {
   inset: 0;
   background-color: rgba(63, 69, 76, 0.8);
 }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

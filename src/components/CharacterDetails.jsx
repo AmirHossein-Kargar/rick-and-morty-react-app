@@ -1,7 +1,48 @@
 import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
-import { character, episodes } from "../../data/data";
+import { episodes } from "../../data/data";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import Loader from "./Loader"
 
 export default function CharacterDetails({ selectedId }) {
+  const [character, setCharacter] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setCharacter(null)
+        const { data } = await axios.get(
+          `https://rickandmortyapi.com/api/character/${selectedId}`
+        );
+        setCharacter(data);
+      } catch (error) {
+        toast.error(error.response.data.error)
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (selectedId) fetchData();
+  }, [selectedId]);
+
+  if (isLoading) {
+    return (
+      <div style={{ flex: "1"}}>
+        <Loader/>
+      </div>
+    );
+  }
+
+  if (!character || !selectedId)
+    return (
+      <h2 style={{ color: "var(--slate-300)", margin: "0 auto" }}>
+        Please Select A Character
+      </h2>
+    );
+
   return (
     <div>
       <div className="character-detail">
@@ -44,7 +85,9 @@ export default function CharacterDetails({ selectedId }) {
                   {String(index + 1).padStart(2, 0)} - {item.episode} :{" "}
                   <strong>{item.name}</strong>
                 </div>
-                <div className="date badge badge--secondary">{item.air_date}</div>
+                <div className="date badge badge--secondary">
+                  {item.air_date}
+                </div>
               </li>
             );
           })}

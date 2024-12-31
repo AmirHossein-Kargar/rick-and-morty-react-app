@@ -15,8 +15,6 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
-
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -40,10 +38,8 @@ export default function App() {
   }, [query]);
 
   const handleSelectCharacter = (id) => {
-    setSelectedId(id);
+    setSelectedId((prevId) => (prevId === id ? null : id));
   };
-
-
 
   return (
     <div className="app">
@@ -54,6 +50,7 @@ export default function App() {
       </Navbar>
       <Main characters={Characters}>
         <CharacterList
+          selectedId={selectedId}
           Characters={Characters}
           isLoading={isLoading}
           onSelectCharacter={handleSelectCharacter}
