@@ -1,10 +1,14 @@
-import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowUpCircleIcon, CheckBadgeIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
 
-export default function CharacterDetails({ selectedId }) {
+export default function CharacterDetails({
+  selectedId,
+  onAddFavorites,
+  isAddedToFavorites,
+}) {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -74,7 +78,16 @@ export default function CharacterDetails({ selectedId }) {
             <p>{character.location.name}</p>
           </div>
           <div className="actions">
-            <button className="btn btn--primary">Add To Favorite</button>
+            {isAddedToFavorites ? (
+              <p>Already Added <CheckIcon className="checkicon"/></p>
+            ) : (
+              <button
+                className="btn btn--primary"
+                onClick={() => onAddFavorites(character)}
+              >
+                Add To Favorite
+              </button>
+            )}
           </div>
         </div>
       </div>

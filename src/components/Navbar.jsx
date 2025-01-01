@@ -5,7 +5,7 @@ export default function Navbar({ children }) {
     <nav className="navbar">
       <Logo />
       {children}
-      <Heart />
+      
     </nav>
   );
 }
@@ -34,11 +34,11 @@ export function SearchResult({ numOfResult }) {
   );
 }
 
-function Heart() {
+export function Heart({ numOfFavorites }) {
   return (
     <button className="heart">
       <HeartIcon className="icon" />
-      <span className="badge">4</span>
+      <span className="badge">{numOfFavorites}</span>
     </button>
   );
 }

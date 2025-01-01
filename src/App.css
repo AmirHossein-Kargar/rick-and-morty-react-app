@@ -234,3 +234,8 @@
     flex-direction: row;
   }
 }
+.checkicon {
+  color: var(--green-600);
+  width: 1rem;
+  vertical-align: middle;
+}
