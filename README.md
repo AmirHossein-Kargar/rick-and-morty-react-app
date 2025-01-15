@@ -13,7 +13,7 @@ A React-based web application that allows users to explore characters, episodes,
 - **Search Functionality**: Quickly search for characters, episodes, or locations. 🔍
 - **Responsive Design**: Fully optimized for desktop and mobile devices. 📱
 ## Deployment 🚢
-This project is deployed on [Vercel](https://vercel.com/). Check out the live version here: [Live Demo](#).
+This project is deployed on [Vercel](https://vercel.com/). Check out the live version here: [Live Demo]([#](https://rick-and-morty-react-app-zeta.vercel.app/)).
 ## Technologies Used 🛠️
 
 - **React**: Frontend library for building the UI. ⚛️
