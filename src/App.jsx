@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-// import { allCharacters, character } from "../data/data.js";
 import CharacterDetails from "./components/CharacterDetails";
 import CharacterList from "./components/CharacterList";
 import Navbar, { SearchResult } from "./components/Navbar";
@@ -9,14 +8,14 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { Search } from "./components/Navbar";
 import { Heart } from "./components/Navbar";
-import Modal from "./components/Modal.jsx";
 
 export default function App() {
   const [Characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(
+    () => JSON.parse(localStorage.getItem("Favorites")) || []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -50,6 +49,11 @@ export default function App() {
       controller.abort();
     };
   }, [query]);
+
+  // * Save in Local Storage
+  useEffect(() => {
+    localStorage.setItem("Favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   const handleSelectCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
