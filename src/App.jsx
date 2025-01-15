@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { Search } from "./components/Navbar";
 import { Heart } from "./components/Navbar";
+import Modal from "./components/Modal.jsx";
 
 export default function App() {
   const [Characters, setCharacters] = useState([]);
@@ -57,6 +58,11 @@ export default function App() {
     setFavorites((prevFav) => [...prevFav, char]);
   };
 
+  // * delete favorite item when user clicked
+  const handleDeleteFavorite = (id) => {
+    setFavorites(favorites.filter((fav) => fav.id !== id));
+  };
+
   const isAddedToFavorites = favorites
     .map((fav) => fav.id)
     .includes(selectedId);
@@ -64,10 +70,11 @@ export default function App() {
   return (
     <div className="app">
       <Toaster />
+
       <Navbar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={Characters.length} />
-        <Heart numOfFavorites={favorites.length} />
+        <Heart favorites={favorites} onDeleteFavorite={handleDeleteFavorite} />
       </Navbar>
       <Main characters={Characters}>
         <CharacterList
