@@ -222,7 +222,28 @@
   padding: 0.5rem 0;
   /* cursor: pointer; */
 }
+@media (max-width: 576px) {
+.navbar {
+  flex-direction: column;
+  gap: 10px;
+}
+.main {
+  flex-direction: column;
+  margin-top: 3rem;
+}
+.character-detail__img {
+  object-fit: none;
+  margin-top: 1rem;
+}
+.character-detail {
+  text-align: center;
+}
+.actions .btn {
+  width: auto;
+  margin: 0 auto;
+}
 
+}
 @media (min-width: 768px) {
   .character-detail {
     flex-direction: row;
