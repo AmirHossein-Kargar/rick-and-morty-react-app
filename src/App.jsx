@@ -5,55 +5,16 @@ import CharacterList from "./components/CharacterList";
 import Navbar, { SearchResult } from "./components/Navbar";
 import Loader from "./components/Loader.jsx";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
 import { Search } from "./components/Navbar";
 import { Heart } from "./components/Navbar";
+import useCharacters from "./hooks/useCharacters.js";
+import useLocalStorage from "./hooks/useLocalStorage.js";
 
 export default function App() {
-  const [Characters, setCharacters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const { isLoading, Characters } = useCharacters(query);
   const [selectedId, setSelectedId] = useState(null);
-  const [favorites, setFavorites] = useState(
-    () => JSON.parse(localStorage.getItem("Favorites")) || []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character?name=${query}`,
-          { signal }
-        );
-        setCharacters(data.results.slice(0, 4));
-      } catch (error) {
-        // ! for cancelled REQ
-        if (!axios.isCancel()) {
-          setCharacters([]);
-          toast.error(error.response.data.error);
-        }
-
-        // toast.error(error.response.data.error, {
-        //   className: "custom-toast",
-        //   bodyClassName: "custom-toast-body",
-        //   theme: "dark",
-        // });
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchData();
-    return () => {
-      controller.abort();
-    };
-  }, [query]);
-
-  // * Save in Local Storage
-  useEffect(() => {
-    localStorage.setItem("Favorites", JSON.stringify(favorites));
-  }, [favorites]);
+  const [favorites, setFavorites] = useLocalStorage("FAVORITES", [])
 
   const handleSelectCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
